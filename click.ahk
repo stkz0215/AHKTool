@@ -1,9 +1,11 @@
 ;--GUIの設定
 Gui, Font, s18 Bold, Meiryo
-Gui, Add, Text, x100 y100 cBlue, はろー
+Gui, Add, Text, , ここにタイトルを入力
 Gui, Font, ,
 Gui, Font, s10
-Gui, Add, Edit, vInterval Number, 10
+Gui, Add, Text, x5   y60, 連打間隔（ms）:
+Gui, Add, Edit, x100 y55 vInterval Number, 20
+Gui, Add, Text, x5   y80, F9で実行、F10で停止
 
 ;--GUI表示
 Gui, show
