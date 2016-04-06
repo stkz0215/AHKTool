@@ -1,3 +1,5 @@
+#InstallMouseHook
+
 ;--GUIの設定
 Gui, Font, s18 Bold, Meiryo
 Gui, Add, Text, , ここにタイトルを入力
@@ -5,24 +7,37 @@ Gui, Font, ,
 Gui, Font, s10
 Gui, Add, Text, x5   y60, 連打間隔（ms）:
 Gui, Add, Edit, x100 y55 vInterval Number, 20
-Gui, Add, Text, x5   y80, F9で実行、F10で停止
+message := "F9で実行、F10で停止、実行中にF11でカーソル固定"
+Gui, Add, Text, x5   y80, %message%
 
 ;--GUI表示
 Gui, show
 
-Flag := false
-#If !Flag
+Flag_F9 := false
+Flag_F11 := false
+
+#If !Flag_F9
 	F9::
-	Flag := true
+	Flag_F9 := true
+	MouseGetPos, start_x, start_y
 	Gui, Submit, NoHide
-	while Flag {
+	while Flag_F9 {
+		MouseGetPos, now_x, now_y
+		If Flag_F11 {
+			MouseMove, start_x, start_y, 0
+		}
+		
 		click
 		sleep, Interval
 	}
 return
 
-#If Flag
+#If Flag_F9
 	F10::
-	Flag := false
-return
+	Flag_F9 := false
+	return
+	
+	F11::
+	Flag_F11 := !Flag_F11
+	return
 #If
